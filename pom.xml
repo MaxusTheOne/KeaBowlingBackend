@@ -15,7 +15,7 @@
     <!--Often a reversed company domain name, here you could use something like below -->
     <groupId>kea</groupId>
     <!-- The artifactId is the base package name used in the project -->
-    <artifactId>kinobackend</artifactId>
+    <artifactId>bowlingbackend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>kinobackend</name>
     <description>
