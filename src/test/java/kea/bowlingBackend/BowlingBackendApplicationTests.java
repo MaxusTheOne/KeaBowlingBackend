@@ -1,9 +1,9 @@
-package kea.kinoBackend;
+package kea.bowlingBackend;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class KinobackendApplicationTests {
+class BowlingBackendApplicationTests {
 
 //    @Test
 //    void contextLoads() {

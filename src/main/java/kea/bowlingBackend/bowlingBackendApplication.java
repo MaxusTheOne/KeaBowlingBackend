@@ -1,4 +1,4 @@
-package kea.kinoBackend;
+package kea.bowlingBackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class bowlingBackendApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(kea.kinoBackend.bowlingBackendApplication.class, args);
+        SpringApplication.run(kea.bowlingBackend.bowlingBackendApplication.class, args);
     }
 
 }

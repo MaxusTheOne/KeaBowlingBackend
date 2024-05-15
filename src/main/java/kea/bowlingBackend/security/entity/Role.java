@@ -1,4 +1,4 @@
-package kea.kinoBackend.security.entity;
+package kea.bowlingBackend.security.entity;
 
 
 import jakarta.persistence.Entity;

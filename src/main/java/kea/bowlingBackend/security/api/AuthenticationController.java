@@ -1,9 +1,9 @@
-package kea.kinoBackend.security.api;
+package kea.bowlingBackend.security.api;
 
-import kea.kinoBackend.security.dto.LoginRequest;
-import kea.kinoBackend.security.dto.LoginResponse;
-import kea.kinoBackend.security.entity.UserWithRoles;
-import kea.kinoBackend.security.service.UserDetailsServiceImp;
+import kea.bowlingBackend.security.dto.LoginRequest;
+import kea.bowlingBackend.security.dto.LoginResponse;
+import kea.bowlingBackend.security.entity.UserWithRoles;
+import kea.bowlingBackend.security.service.UserDetailsServiceImp;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;

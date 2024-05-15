@@ -1,72 +1,37 @@
+package kea.bowlingBackend.project.model;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
 
 @Entity
+@Getter
+@Setter
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private string name;
-    private string password;
-    private string email;
+    private String name;
+    private String password;
+    private String email;
 
-    private string dateCreated;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Purchase> purchases;
 
-    private string dateLastLogin;
-    private string dateEdited;
-    private <string> roles;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Reservation> reservations;
 
-    public int getId() {
-        return id;
-    }
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ScheduleTime> scheduledTimes;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    private String dateCreated;
 
-    public string getName() {
-        return name;
-    }
+    private String dateLastLogin;
+    private String dateEdited;
+    private String roles;
 
-    public void setName(string name) {
-        this.name = name;
-    }
 
-    public string getPassword() {
-        return password;
-    }
-
-    public void setPassword(string password) {
-        this.password = password;
-    }
-
-    public string getEmail() {
-        return email;
-    }
-
-    public void setEmail(string email) {
-        this.email = email;
-    }
-
-    public string getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(string dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public string getDateLastLogin() {
-        return dateLastLogin;
-    }
-
-    public void setDateLastLogin(string dateLastLogin) {
-        this.dateLastLogin = dateLastLogin;
-    }
-
-    public string getDateEdited() {
-        return dateEdited;
-    }
-
-    public void setDateEdited(string dateEdited) {
-        this.dateEdited = dateEdited;
-    }
 }

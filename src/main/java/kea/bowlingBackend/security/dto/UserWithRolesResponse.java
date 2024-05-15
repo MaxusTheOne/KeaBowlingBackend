@@ -1,7 +1,7 @@
-package kea.kinoBackend.security.dto;
+package kea.bowlingBackend.security.dto;
 
 
-import kea.kinoBackend.security.entity.UserWithRoles;
+import kea.bowlingBackend.security.entity.UserWithRoles;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,6 +1,6 @@
-package kea.kinoBackend.security.repository;
+package kea.bowlingBackend.security.repository;
 
-import kea.kinoBackend.security.entity.UserWithRoles;
+import kea.bowlingBackend.security.entity.UserWithRoles;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface

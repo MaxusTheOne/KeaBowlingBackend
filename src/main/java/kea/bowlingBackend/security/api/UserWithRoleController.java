@@ -1,8 +1,8 @@
-package kea.kinoBackend.security.api;
+package kea.bowlingBackend.security.api;
 
-import kea.kinoBackend.security.dto.UserWithRolesRequest;
-import kea.kinoBackend.security.dto.UserWithRolesResponse;
-import kea.kinoBackend.security.service.UserWithRolesService;
+import kea.bowlingBackend.security.dto.UserWithRolesRequest;
+import kea.bowlingBackend.security.dto.UserWithRolesResponse;
+import kea.bowlingBackend.security.service.UserWithRolesService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

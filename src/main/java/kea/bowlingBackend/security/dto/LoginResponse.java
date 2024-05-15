@@ -1,4 +1,4 @@
-package kea.kinoBackend.security.dto;
+package kea.bowlingBackend.security.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

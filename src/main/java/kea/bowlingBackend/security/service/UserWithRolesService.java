@@ -1,11 +1,11 @@
-package kea.kinoBackend.security.service;
+package kea.bowlingBackend.security.service;
 
-import kea.kinoBackend.security.dto.UserWithRolesRequest;
-import kea.kinoBackend.security.dto.UserWithRolesResponse;
-import kea.kinoBackend.security.entity.Role;
-import kea.kinoBackend.security.entity.UserWithRoles;
-import kea.kinoBackend.security.repository.RoleRepository;
-import kea.kinoBackend.security.repository.UserWithRolesRepository;
+import kea.bowlingBackend.security.dto.UserWithRolesRequest;
+import kea.bowlingBackend.security.dto.UserWithRolesResponse;
+import kea.bowlingBackend.security.entity.Role;
+import kea.bowlingBackend.security.entity.UserWithRoles;
+import kea.bowlingBackend.security.repository.RoleRepository;
+import kea.bowlingBackend.security.repository.UserWithRolesRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
