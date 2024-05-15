@@ -16,7 +16,7 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne()
-    private User uID;
+    private User user;
     private Date reservationTime;
     private int peopleAmount;
     private String bookingType;
