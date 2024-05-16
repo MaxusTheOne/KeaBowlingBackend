@@ -1,21 +1,23 @@
 package kea.bowlingBackend.project.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class AirhockeyTable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @ManyToOne
+    private Reservation reservation;
+
     public AirhockeyTable() {
     }
 
-    public int getId() {
-        return id;
-    }
+
 }

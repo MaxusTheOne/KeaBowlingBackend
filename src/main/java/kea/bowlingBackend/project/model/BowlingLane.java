@@ -1,9 +1,6 @@
 package kea.bowlingBackend.project.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class BowlingLane {
@@ -13,6 +10,9 @@ public class BowlingLane {
     private int id;
 
     private boolean isChildFriendly;
+
+    @ManyToOne
+    private Reservation reservation;
 
     public BowlingLane() {
     }
