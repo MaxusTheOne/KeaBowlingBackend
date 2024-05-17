@@ -13,11 +13,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Getter
-@Setter
 @NoArgsConstructor
 public class Role {
    @Id
+   @Getter
+   @Setter
    private String roleName;
 
    public Role(String roleName) {
@@ -31,4 +31,5 @@ public class Role {
       if(users == null) users = new HashSet<>();
       users.add(user);
    }
+
 }
