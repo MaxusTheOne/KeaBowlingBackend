@@ -21,7 +21,7 @@ class UserTest {
         User user = new User();
         user.setName("test");
         user.setPassword("test");
-        user.addRole(new Role("test"));
+        user.addRole(("test"));
         user.setEmail("test@mail.com");
         Date testDate = new Date();
         user.setDateCreated(testDate);
@@ -39,8 +39,8 @@ class UserTest {
 
     @Test
     void testUserConstructor(){
-        List<Role> testRoleList = new ArrayList<Role>();
-        testRoleList.add(new Role("testRole"));
+        List<String> testRoleList = new ArrayList<String>();
+        testRoleList.add("testRole");
         User user = new User("testName", "testPassword","testMail",testRoleList);
 
         assertEquals("testName", user.getName());

@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class bowlingBackendApplication {
+public class BowlingBackendApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(kea.bowlingBackend.bowlingBackendApplication.class, args);
+        SpringApplication.run(BowlingBackendApplication.class, args);
     }
 
 }

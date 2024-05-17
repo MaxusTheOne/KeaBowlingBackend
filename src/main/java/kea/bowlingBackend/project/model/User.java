@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import kea.bowlingBackend.security.entity.Role;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.jdbc.Work;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,10 +58,11 @@ public class User {
 
 
     @Setter
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Role> roles;
+    @ElementCollection
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    private List<String> roles;
 
-    public User(String name,String password,String email,List<Role> roles){
+    public User(String name,String password,String email,List<String> roles){
         this.name = name;
         this.password = password;
         this.email = email;
@@ -71,14 +73,14 @@ public class User {
         roles = new ArrayList<>();
     }
 
-    public void addRole(Role role){
+    public void addRole(String role){
         this.roles.add(role);
     }
 
     public String[] getRoles(){
         String[] roles = new String[this.roles.size()];
         for (int i = 0; i < this.roles.size(); i++) {
-            roles[i] = this.roles.get(i).getRoleName();
+            roles[i] = this.roles.get(i);
         }
         return roles;
     }

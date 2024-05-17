@@ -17,9 +17,9 @@
     <!-- The artifactId is the base package name used in the project -->
     <artifactId>bowlingbackend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>kinobackend</name>
+    <name>bowlingBackend</name>
     <description>
-        kinobackend
+        bowlingBackend
     </description>
     <properties>
         <java.version>17</java.version>
@@ -98,6 +98,13 @@
             <version>3.2.3</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+
 
     </dependencies>
 
@@ -115,6 +122,7 @@
                     </excludes>
                 </configuration>
             </plugin>
+
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

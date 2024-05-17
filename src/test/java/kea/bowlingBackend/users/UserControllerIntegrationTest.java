@@ -1,5 +1,6 @@
 package kea.bowlingBackend.users;
 
+import kea.bowlingBackend.BowlingBackendApplication;
 import kea.bowlingBackend.project.model.User;
 import kea.bowlingBackend.security.entity.Role;
 import org.junit.jupiter.api.Test;
@@ -8,7 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+
+@SpringBootTest(classes = BowlingBackendApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerIntegrationTest {
 
     @Autowired
@@ -36,7 +38,7 @@ public class UserControllerIntegrationTest {
         user.setName("testName");
         user.setPassword("testPassword");
         user.setEmail("testMail");
-        user.addRole(new Role("testRole"));
+        user.addRole("testRole");
 
         webClient.post().uri("/users")
                 .contentType(MediaType.APPLICATION_JSON)
