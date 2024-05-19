@@ -23,6 +23,10 @@ public class User {
 
     @Getter
     @Setter
+    private String username;
+
+    @Getter
+    @Setter
     private String password;
 
     @Getter
@@ -62,12 +66,12 @@ public class User {
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     private List<String> roles;
 
-    public User(String name,String password,String email,List<String> roles){
+    public User(String name, String username, String password,String email,List<String> roles){
         this.name = name;
         this.password = password;
         this.email = email;
         this.roles = roles ;
-
+        this.username = username;
     }
     public User() {
         roles = new ArrayList<>();

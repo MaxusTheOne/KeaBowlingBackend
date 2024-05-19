@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 public class UserWithRolesService {
 
@@ -51,14 +53,14 @@ public class UserWithRolesService {
     this.passwordEncoder = passwordEncoder;
   }
 
-  public UserWithRolesResponse getUserWithRoles(String id) {
-    UserWithRoles user = userWithRolesRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+  public UserWithRolesResponse getUserWithRoles(String username) {
+    UserWithRoles user = userWithRolesRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     return new UserWithRolesResponse(user);
   }
 
   //Make sure that this can ONLY be called by an admin
   public UserWithRolesResponse addRole(String username, String newRole) {
-    UserWithRoles user = userWithRolesRepository.findById(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+    UserWithRoles user = userWithRolesRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     Role role = roleRepository.findById(newRole).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"));
     user.addRole(role);
     return new UserWithRolesResponse(userWithRolesRepository.save(user));
@@ -66,7 +68,7 @@ public class UserWithRolesService {
 
   //Make sure that this can ONLY be called by an admin
   public UserWithRolesResponse removeRole(String username, String roleToRemove) {
-    UserWithRoles user = userWithRolesRepository.findById(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+    UserWithRoles user = userWithRolesRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     Role role = roleRepository.findById(roleToRemove).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"));
     user.removeRole(role);
     return new UserWithRolesResponse(userWithRolesRepository.save(user));
@@ -74,9 +76,10 @@ public class UserWithRolesService {
 
   //Only way to change roles is via the addRole/removeRole methods
   public UserWithRolesResponse editUserWithRoles(String username, UserWithRolesRequest body) {
-    UserWithRoles user = userWithRolesRepository.findById(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+    UserWithRoles user = userWithRolesRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     user.setEmail(body.getEmail());
-    user.setPassword(passwordEncoder.encode(body.getPassword()));
+    user.setRoles(body.getRoles());
+    // Do not change the password
     return new UserWithRolesResponse(userWithRolesRepository.save(user));
   }
 
@@ -85,7 +88,7 @@ public class UserWithRolesService {
    * @return the user added
    */
   public UserWithRolesResponse addUserWithRoles(UserWithRolesRequest body) {
-    if (userWithRolesRepository.existsById(body.getUsername())) {
+    if (userWithRolesRepository.existsByUsername(body.getUsername())) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user name is taken");
     }
     if (userWithRolesRepository.existsByEmail(body.getEmail())) {
@@ -112,11 +115,11 @@ public class UserWithRolesService {
         return new UserWithRolesResponse(user);
     }
 
-    public UserWithRolesResponse createStaff(UserWithRolesRequest request) {
-        UserWithRoles userWithRoles = new UserWithRoles(request.getUsername(), passwordEncoder.encode(request.getPassword()), request.getEmail());
-        Role role = roleRepository.findById("STAFF").orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"));
-        userWithRoles.addRole(role);
-        return new UserWithRolesResponse(userWithRolesRepository.save(userWithRoles));
+    public List<UserWithRoles> getAllUsers() {
+        return userWithRolesRepository.findAll();
     }
 
+  public UserWithRoles getUser(String username) {
+    return userWithRolesRepository.findById(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+  }
 }

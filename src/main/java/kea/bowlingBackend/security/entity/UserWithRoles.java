@@ -1,5 +1,6 @@
 package kea.bowlingBackend.security.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,6 +32,10 @@ public class UserWithRoles implements UserDetails {
   static final int PASSWORD_MIN_LENGTH = 60;  // BCrypt encoded passwords always have length 60
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "user_id")
+  private Long userId;
+
   @Column(nullable = false,length = 50,unique = true)
   String username;
 
@@ -38,6 +43,7 @@ public class UserWithRoles implements UserDetails {
   String email;
 
   //60 = length of a bcrypt encoded password
+  @JsonIgnore
   @Column(nullable = false, length = 60)
   String password;
 
@@ -50,9 +56,10 @@ public class UserWithRoles implements UserDetails {
   private LocalDateTime edited;
 
 
+  @Getter
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_roles",
-          joinColumns = {@JoinColumn(name = "user_username", referencedColumnName = "username")},
+          joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
           inverseJoinColumns = {@JoinColumn(name = "role_roleName", referencedColumnName = "roleName")})
   Set<Role> roles = new HashSet<>();
 
@@ -98,4 +105,5 @@ public class UserWithRoles implements UserDetails {
 
   @Override
   public boolean isCredentialsNonExpired() { return enabled; }
+
 }

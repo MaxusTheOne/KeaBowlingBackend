@@ -41,9 +41,10 @@ class UserTest {
     void testUserConstructor(){
         List<String> testRoleList = new ArrayList<String>();
         testRoleList.add("testRole");
-        User user = new User("testName", "testPassword","testMail",testRoleList);
+        User user = new User("testName", "testUsername", "testPassword","testMail",testRoleList);
 
         assertEquals("testName", user.getName());
+        assertEquals("testUsername", user.getUsername());
         assertEquals("testPassword", user.getPassword());
         assertEquals("testMail", user.getEmail());
         assertEquals("testRole", user.getRoles()[0]);
