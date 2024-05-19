@@ -32,6 +32,7 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody User user) {
         return new ResponseEntity<>(userRepository.save(user), HttpStatus.CREATED);
     }
+    
 
 
 }
