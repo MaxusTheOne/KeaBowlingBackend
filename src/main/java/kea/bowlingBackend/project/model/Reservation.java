@@ -1,6 +1,7 @@
 package kea.bowlingBackend.project.model;
 
 import jakarta.persistence.*;
+import kea.bowlingBackend.security.entity.UserWithRoles;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +18,7 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne()
-    private User user;
+    private UserWithRoles user;
     private Date reservationTime;
     private int peopleAmount;
     private String bookingType;

@@ -1,6 +1,7 @@
 package kea.bowlingBackend.project.model;
 
 import jakarta.persistence.*;
+import kea.bowlingBackend.security.entity.UserWithRoles;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +15,7 @@ public class ScheduleTime {
     private int id;
 
     @ManyToOne()
-    private User staff;
+    private UserWithRoles staff;
     private String date;
     private String startTime;
     private String hours;

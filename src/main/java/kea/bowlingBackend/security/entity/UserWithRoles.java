@@ -1,6 +1,9 @@
 package kea.bowlingBackend.security.entity;
 
 import jakarta.persistence.*;
+import kea.bowlingBackend.project.model.Purchase;
+import kea.bowlingBackend.project.model.Reservation;
+import kea.bowlingBackend.project.model.ScheduleTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Configurable
@@ -37,6 +41,16 @@ public class UserWithRoles implements UserDetails {
   @Column(nullable = false,length = 50,unique = true)
   String email;
 
+  @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private List<Purchase> purchase;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private List<Reservation> reservations;
+
+  @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private List<ScheduleTime> scheduledTimes;
+
+
   //60 = length of a bcrypt encoded password
   @Column(nullable = false, length = 60)
   String password;
@@ -50,6 +64,8 @@ public class UserWithRoles implements UserDetails {
   private LocalDateTime edited;
 
 
+  @Getter
+  @Setter
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_roles",
           joinColumns = {@JoinColumn(name = "user_username", referencedColumnName = "username")},
@@ -63,6 +79,7 @@ public class UserWithRoles implements UserDetails {
     setPassword(password);
     this.email = email;
   }
+
 
   public void setPassword(String pw){
     if(pw.length()<60){

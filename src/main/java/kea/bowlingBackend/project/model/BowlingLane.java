@@ -1,10 +1,12 @@
 package kea.bowlingBackend.project.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
 public class BowlingLane {
 
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -15,9 +17,6 @@ public class BowlingLane {
     private Reservation reservation;
 
     public BowlingLane() {
-    }
-    public int getId() {
-        return id;
     }
 
     public boolean isChildFriendly() {
