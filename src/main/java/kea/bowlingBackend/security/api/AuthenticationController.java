@@ -2,6 +2,7 @@ package kea.bowlingBackend.security.api;
 
 import kea.bowlingBackend.security.dto.LoginRequest;
 import kea.bowlingBackend.security.dto.LoginResponse;
+import kea.bowlingBackend.security.entity.Role;
 import kea.bowlingBackend.security.entity.UserWithRoles;
 import kea.bowlingBackend.security.service.UserDetailsServiceImp;
 import io.swagger.v3.oas.annotations.Operation;
@@ -74,7 +75,7 @@ public class AuthenticationController {
               .build();
       JwsHeader jwsHeader = JwsHeader.with(() -> "HS256").build();
       String token = encoder.encode(JwtEncoderParameters.from(jwsHeader, claims)).getTokenValue();
-      List<String> roles = user.getRoles().stream().map(role -> role.getRoleName()).toList();
+      List<String> roles = user.getRoles().stream().map(Role::getRoleName).toList();
       return ResponseEntity.ok()
               .body(new LoginResponse(user.getUsername(), token, roles));
 

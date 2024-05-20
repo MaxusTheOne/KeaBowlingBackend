@@ -1,4 +1,4 @@
-package kea.kinoBackend.security.config;
+package kea.bowlingBackend.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

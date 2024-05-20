@@ -1,6 +1,7 @@
 package kea.bowlingBackend.security.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -13,17 +14,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 @NoArgsConstructor
 public class Role {
    @Id
-   @Getter
-   @Setter
    private String roleName;
 
    public Role(String roleName) {
       this.roleName = roleName;
    }
 
+   @JsonIgnore
    @ManyToMany(mappedBy = "roles",fetch = FetchType.EAGER)
    Set<UserWithRoles> users;
 
@@ -31,5 +33,4 @@ public class Role {
       if(users == null) users = new HashSet<>();
       users.add(user);
    }
-
 }

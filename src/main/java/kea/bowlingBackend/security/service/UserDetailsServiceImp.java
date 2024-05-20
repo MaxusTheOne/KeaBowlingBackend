@@ -25,7 +25,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    final Optional<UserWithRoles> optionalUser = userWithRolesRepository.findById(username);
+    final Optional<UserWithRoles> optionalUser = userWithRolesRepository.findByUsername(username);
     return optionalUser.orElseThrow(()->new ResponseStatusException(HttpStatus.UNAUTHORIZED,WRONG_USERNAME_OR_PASSWORD));
   }
 }
