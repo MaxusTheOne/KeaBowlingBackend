@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/user-with-role")
+@RequestMapping("/users")
 public class UserWithRoleController {
 
   UserWithRolesService userWithRolesService;
@@ -32,23 +32,23 @@ public class UserWithRoleController {
   }
 
   //Take care with this. This should NOT be something everyone can call
-  @PreAuthorize("hasAuthority('ADMIN')")
-  @PatchMapping("/add-role/{username}/{role}")
+
+  @PatchMapping("/role-add/{username}/{role}")
   @Operation(summary = "Add a role to a UserWithRoles", description = "Caller must be authenticated with the role ADMIN")
   public UserWithRolesResponse addRole(@PathVariable String username, @PathVariable String role) {
     return userWithRolesService.addRole(username, role);
   }
 
   //Take care with this. This should NOT be something everyone can call
-  @PreAuthorize("hasAuthority('ADMIN')")
-  @PatchMapping("/remove-role/{username}/{role}")
+
+  @PatchMapping("/role-remove/{username}/{role}")
   @Operation(summary = "Removes a role from a UserWithRoles", description = "Caller must be authenticated with the role ADMIN")
   public UserWithRolesResponse removeRole(@PathVariable String username, @PathVariable String role) {
     return userWithRolesService.removeRole(username, role);
   }
 
   //Delete a user from the system.
-  @PreAuthorize("hasAuthority('ADMIN')")
+
   @DeleteMapping("/{username}")
   @Operation(summary = "Delete a user", description = "Caller must be authenticated with the role ADMIN")
   public UserWithRolesResponse deleteUser(@PathVariable String username) {
@@ -60,15 +60,15 @@ public class UserWithRoleController {
 
   }
 
-  @PreAuthorize("hasAuthority('ADMIN')")
-  @GetMapping("/users")
+
+  @GetMapping("/")
   @Operation(summary = "Get all users", description = "Caller must be authenticated with the role ADMIN")
   public List<UserWithRoles> getAllUsers() {
     return userWithRolesService.getAllUsers();
   }
 
-  @PreAuthorize("hasAuthority('ADMIN')")
-  @PutMapping("/update-user/{username}")
+
+  @PutMapping("/{username}")
   @Operation(summary = "Update a user", description = "Caller must be authenticated with the role ADMIN")
   public UserWithRolesResponse editUserWithRoles(@PathVariable String username, @RequestBody UserWithRolesRequest body) {
     UserWithRoles updatedUser = userWithRolesService.getUser(username);
