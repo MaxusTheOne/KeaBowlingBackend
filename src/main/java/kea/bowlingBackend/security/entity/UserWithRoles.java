@@ -33,6 +33,7 @@ public class UserWithRoles implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Getter
   @Column(name = "user_id")
   private Long userId;
 
