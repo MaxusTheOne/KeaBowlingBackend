@@ -1,6 +1,7 @@
 package kea.bowlingBackend.security.dto;
 
 
+import kea.bowlingBackend.security.entity.Role;
 import kea.bowlingBackend.security.entity.UserWithRoles;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +23,7 @@ public class UserWithRolesResponse {
 
         this.id =  userWithRoles.getUserId().toString();
         this.userName = userWithRoles.getUsername();
-        this.roles = userWithRoles.getRoles().stream().map(role -> role.getRoleName()).toList();
+        this.roles = userWithRoles.getRoles().stream().map(Role::getRoleName).toList();
         this.email = userWithRoles.getEmail();
         this.created = userWithRoles.getCreated().toString();
         this.edited = userWithRoles.getEdited().toString();

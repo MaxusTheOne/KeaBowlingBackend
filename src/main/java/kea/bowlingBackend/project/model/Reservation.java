@@ -19,22 +19,15 @@ public class Reservation {
     private int id;
     @ManyToOne()
     private UserWithRoles user;
-    private Date reservationTime;
+    private Date reservationDateTime;
+    private int reservationLengthMinutes;
     private int peopleAmount;
     private String bookingType;
-    private int bookingTypeID;
+    private boolean childFriendly;
 
     @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Equipment> equipment;
 
-    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<BowlingLane> bowlingLanes;
-
-    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<AirhockeyTable> airhockeyTables;
-
-    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Dining> dining;
 
     public Reservation() {
     }
