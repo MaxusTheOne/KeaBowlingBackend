@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -115,8 +116,11 @@ public class UserWithRolesService {
         return new UserWithRolesResponse(user);
     }
 
-    public List<UserWithRoles> getAllUsers() {
-        return userWithRolesRepository.findAll();
+    public List<UserWithRolesResponse> getAllUsers() {
+      List<UserWithRolesResponse> users = new ArrayList<>();
+        userWithRolesRepository.findAll().forEach(user -> users.add(new UserWithRolesResponse(user)));
+
+        return users;
     }
 
   public UserWithRoles getUser(String username) {

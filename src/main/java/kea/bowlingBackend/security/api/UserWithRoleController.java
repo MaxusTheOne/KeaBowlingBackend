@@ -61,9 +61,9 @@ public class UserWithRoleController {
   }
 
 
-  @GetMapping("/")
+  @GetMapping("")
   @Operation(summary = "Get all users", description = "Caller must be authenticated with the role ADMIN")
-  public List<UserWithRoles> getAllUsers() {
+  public List<UserWithRolesResponse> getAllUsers() {
     return userWithRolesService.getAllUsers();
   }
 
