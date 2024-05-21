@@ -97,6 +97,13 @@ public class UserWithRoles implements UserDetails {
     }
   }
 
+  public String getName(){
+    return username;
+  }
+
+  public String getUsername(){
+    return username;
+  }
   //You can, but are NOT expected to use the fields below
   @Override
   public boolean isAccountNonExpired() {return enabled;}

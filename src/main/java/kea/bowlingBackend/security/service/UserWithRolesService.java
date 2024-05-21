@@ -126,4 +126,6 @@ public class UserWithRolesService {
   public UserWithRoles getUser(String username) {
     return userWithRolesRepository.findById(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
   }
+
+
 }
