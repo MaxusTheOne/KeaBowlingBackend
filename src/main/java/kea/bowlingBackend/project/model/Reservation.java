@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import kea.bowlingBackend.security.entity.UserWithRoles;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.catalina.User;
 
 import java.util.Date;
 import java.util.List;
@@ -45,4 +46,21 @@ public class Reservation {
         this.equipment = equipment.stream().map(Equipment::new).toList();
 
     }
+
+    public Reservation(UserWithRoles user, int reservationLengthMinutes, int peopleAmount, String bookingType, boolean childFriendly, List<String> equipment) {
+        this.user = user;
+        this.reservationDateTime = new Date();
+        this.reservationLengthMinutes = reservationLengthMinutes;
+        this.peopleAmount = peopleAmount;
+        this.bookingType = bookingType;
+        this.childFriendly = childFriendly;
+        if (equipment != null){
+            this.equipment = equipment.stream().map(Equipment::new).toList();
+        } else {
+            this.equipment = null;
+        }
+
+
+    }
+
 }

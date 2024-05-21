@@ -3,19 +3,23 @@ package kea.bowlingBackend.project.service;
 import kea.bowlingBackend.project.dto.ReservationRequestDTO;
 import kea.bowlingBackend.project.dto.ReservationResponseDTO;
 import kea.bowlingBackend.project.repository.ReservationRepository;
+import kea.bowlingBackend.security.repository.UserWithRolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
+    private final UserWithRolesRepository userWithRolesRepository;
 
-    public ReservationService(ReservationRepository reservationRepository) {
+    public ReservationService(ReservationRepository reservationRepository, UserWithRolesRepository userWithRolesRepository) {
         this.reservationRepository = reservationRepository;
+        this.userWithRolesRepository = userWithRolesRepository;
     }
 
 
@@ -38,5 +42,9 @@ public class ReservationService {
 
     public void addReservation(ReservationRequestDTO reservationRequestDTO) {
         reservationRepository.save(reservationRequestDTO.toReservation());
+    }
+
+    public List<ReservationResponseDTO> getReservationsByUserId(int userId) {
+        return reservationRepository.findByUser(userWithRolesRepository.findById(Integer.toString(userId))).stream().map(ReservationResponseDTO::new).collect(Collectors.toList());
     }
 }

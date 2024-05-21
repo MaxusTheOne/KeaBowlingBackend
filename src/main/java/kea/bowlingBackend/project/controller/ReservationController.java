@@ -31,6 +31,11 @@ public class ReservationController {
         return reservationService.getById(id);
     }
 
+    @GetMapping("/user/{userId}")
+    public List<ReservationResponseDTO> getReservationsByUserId(@PathVariable int userId) {
+        return reservationService.getReservationsByUserId(userId);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteReservation(@PathVariable String id) {
         reservationService.deleteReservation(id);
