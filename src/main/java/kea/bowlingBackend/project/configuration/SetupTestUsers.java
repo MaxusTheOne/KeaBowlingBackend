@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.NoSuchElementException;
 
 @Component
-public class SetupTestUsers implements ApplicationRunner {
+public class SetupTestUsers {
     UserWithRolesRepository userWithRolesRepository;
     RoleRepository roleRepository;
 
@@ -27,11 +27,9 @@ public class SetupTestUsers implements ApplicationRunner {
         this.passwordUsedByAll = "test12";
     }
 
-    public void run(ApplicationArguments args) {
-        createTestUsers();
-    }
 
-    private void createTestUsers() {
+
+    void createTestUsers() {
         roleRepository.save(new Role("USER"));
         roleRepository.save(new Role("STAFF"));
         roleRepository.save(new Role("ADMIN"));
