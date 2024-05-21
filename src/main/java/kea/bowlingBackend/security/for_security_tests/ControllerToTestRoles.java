@@ -40,22 +40,22 @@ public class ControllerToTestRoles {
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/admin")
     public TestResponse getAdminUser(Principal principal) {
-        return new TestResponse(userWithRolesService.getUserWithRoles(principal.getName()).getUserName(),"Admin");
+        return new TestResponse(userWithRolesService.getUserWithRoles(principal.getName()).getUsername(),"Admin");
     }
     @PreAuthorize("hasAuthority('USER')")
     @GetMapping("/user")
     public TestResponse getUserUser(Principal principal) {
-        return new TestResponse(userWithRolesService.getUserWithRoles(principal.getName()).getUserName(),"User");
+        return new TestResponse(userWithRolesService.getUserWithRoles(principal.getName()).getUsername(),"User");
     }
 
     @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
     @GetMapping("/useradmin")
     public TestResponse getUserOrAdminUser(Principal principal) {
-        return new TestResponse(userWithRolesService.getUserWithRoles(principal.getName()).getUserName(),"User and/or Amin");
+        return new TestResponse(userWithRolesService.getUserWithRoles(principal.getName()).getUsername(),"User and/or Amin");
     }
 
     @GetMapping("/authenticated")
     public TestResponse getAuthenticatedUser(Principal principal) {
-        return new TestResponse(userWithRolesService.getUserWithRoles(principal.getName()).getUserName(),"Authenticated user");
+        return new TestResponse(userWithRolesService.getUserWithRoles(principal.getName()).getUsername(),"Authenticated user");
     }
 }

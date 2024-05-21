@@ -31,7 +31,7 @@ public class Reservation {
     private List<BowlingLane> bowlingLanes;
 
     @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<AirhockeyTable> airhockeyTables;
+    private List<AirhockeyTable> airHockeyTables;
 
     @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Dining> dining;

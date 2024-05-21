@@ -15,11 +15,21 @@ public class Equipment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    private String description;
+    private String brand;
+    private String type;
     private int stockAmount;
 
     @ManyToOne
     private  Reservation reservation;
 
+    public Equipment(String name, String description, String brand, String type, int stockAmount) {
+        this.name = name;
+        this.description = description;
+        this.brand = brand;
+        this.type = type;
+        this.stockAmount = stockAmount;
+    }
 
     public Equipment() {
     }

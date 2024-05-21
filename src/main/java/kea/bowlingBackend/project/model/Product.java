@@ -18,8 +18,13 @@ public class Product {
     private double price;
     private int stock;
     private String image;
-    @OneToMany(mappedBy = "product")
-    private List<Purchase> purchases;
+
+    public Product(String name, double price, int stock, String image) {
+        this.name = name;
+        this.price = price;
+        this.stock = stock;
+        this.image = image;
+    }
 
     public Product() {
     }
