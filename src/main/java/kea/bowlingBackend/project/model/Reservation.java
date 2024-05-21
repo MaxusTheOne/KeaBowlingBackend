@@ -33,4 +33,16 @@ public class Reservation {
     }
 
 
+
+
+    public Reservation(int userId, int reservationLengthMinutes, int peopleAmount, String bookingType, boolean childFriendly, List<String> equipment) {
+        this.user = new UserWithRoles();
+        this.user.setUserId((long) userId);
+        this.reservationLengthMinutes = reservationLengthMinutes;
+        this.peopleAmount = peopleAmount;
+        this.bookingType = bookingType;
+        this.childFriendly = childFriendly;
+        this.equipment = equipment.stream().map(Equipment::new).toList();
+
+    }
 }

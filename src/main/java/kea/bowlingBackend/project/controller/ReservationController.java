@@ -1,11 +1,10 @@
 package kea.bowlingBackend.project.controller;
 
+import kea.bowlingBackend.project.dto.ReservationRequestDTO;
 import kea.bowlingBackend.project.dto.ReservationResponseDTO;
 import kea.bowlingBackend.project.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +24,20 @@ public class ReservationController {
     @GetMapping("")
     public List<ReservationResponseDTO> getAllReservations() {
         return reservationService.getAllReservations();
+    }
+
+    @GetMapping("/{id}")
+    public ReservationResponseDTO getReservationById(@PathVariable String id) {
+        return reservationService.getById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteReservation(@PathVariable String id) {
+        reservationService.deleteReservation(id);
+    }
+
+    @PostMapping("")
+    public void addReservation(@RequestBody ReservationRequestDTO reservationRequestDTO) {
+        reservationService.addReservation(reservationRequestDTO);
     }
 }
