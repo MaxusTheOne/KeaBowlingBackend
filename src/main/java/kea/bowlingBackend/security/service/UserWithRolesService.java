@@ -7,14 +7,14 @@ import kea.bowlingBackend.security.entity.UserWithRoles;
 import kea.bowlingBackend.security.repository.RoleRepository;
 import kea.bowlingBackend.security.repository.UserWithRolesRepository;
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserWithRolesService {
@@ -26,9 +26,8 @@ public class UserWithRolesService {
   private final RoleRepository roleRepository;
   private Role roleToAssign;
 
-
-  PasswordEncoder passwordEncoder;
-
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
   @PostConstruct
   public void init(){
@@ -59,6 +58,16 @@ public class UserWithRolesService {
     return new UserWithRolesResponse(user);
   }
 
+  public void setRoles(UserWithRoles user, String[] roleNames) {
+    Set<Role> roles = new HashSet<>();
+    for (String roleName : roleNames) {
+      Role role = roleRepository.findByRoleName(roleName)
+              .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found: " + roleName));
+      roles.add(role);
+    }
+    user.setRoles(roles);
+  }
+
   //Make sure that this can ONLY be called by an admin
   public UserWithRolesResponse addRole(String username, String newRole) {
     UserWithRoles user = userWithRolesRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
@@ -79,16 +88,32 @@ public class UserWithRolesService {
   public UserWithRolesResponse editUserWithRoles(String username, UserWithRolesRequest body) {
     UserWithRoles user = userWithRolesRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     user.setEmail(body.getEmail());
-    user.setRoles(body.getRoles());
+
     // Do not change the password
     return new UserWithRolesResponse(userWithRolesRepository.save(user));
   }
 
-  /**
-   * @param body - the user to be added
-   * @return the user added
-   */
-  public UserWithRolesResponse addUserWithRoles(UserWithRolesRequest body) {
+  public UserWithRolesResponse addUserWithRoles(UserWithRoles userWithRoles) {
+    if (userWithRolesRepository.existsByUsername(userWithRoles.getUsername())) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user name is taken");
+    }
+    if (userWithRolesRepository.existsByEmail(userWithRoles.getEmail())) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This email is used by another user");
+    }
+
+    // Use the existing user object which already has roles set
+    userWithRoles.setPassword(passwordEncoder.encode(userWithRoles.getPassword()));
+
+    // Check if roles are set, otherwise set default role
+    if (userWithRoles.getRoles() == null || userWithRoles.getRoles().isEmpty()) {
+      setDefaultRole(userWithRoles);
+    }
+
+    return new UserWithRolesResponse(userWithRolesRepository.save(userWithRoles));
+  }
+
+
+  public UserWithRolesResponse addUserWithoutRoles(UserWithRolesRequest body) {
     if (userWithRolesRepository.existsByUsername(body.getUsername())) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user name is taken");
     }

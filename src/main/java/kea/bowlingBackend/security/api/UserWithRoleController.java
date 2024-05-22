@@ -2,24 +2,38 @@ package kea.bowlingBackend.security.api;
 
 import kea.bowlingBackend.security.dto.UserWithRolesRequest;
 import kea.bowlingBackend.security.dto.UserWithRolesResponse;
+import kea.bowlingBackend.security.entity.Role;
 import kea.bowlingBackend.security.entity.UserWithRoles;
+import kea.bowlingBackend.security.repository.RoleRepository;
 import kea.bowlingBackend.security.service.UserWithRolesService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @RestController
 @RequestMapping("/users")
 public class UserWithRoleController {
 
+  RoleRepository roleRepository;
   UserWithRolesService userWithRolesService;
 
-  public UserWithRoleController(UserWithRolesService userWithRolesService) {
+  @Autowired
+  private PasswordEncoder passwordEncoder;
+
+  public UserWithRoleController(UserWithRolesService userWithRolesService, RoleRepository roleRepository) {
+    this.roleRepository = roleRepository;
     this.userWithRolesService = userWithRolesService;
   }
 
@@ -27,8 +41,24 @@ public class UserWithRoleController {
   @PostMapping
   @Operation(summary = "Add a new UserWithRoles user",
           description = "If a default role is defined (app.default-role ), this role will be assigned to the user.")
-  public UserWithRolesResponse addUserWithRoles(@RequestBody UserWithRolesRequest request) {
-    return userWithRolesService.addUserWithRoles(request);
+  public UserWithRolesResponse addUserWithoutRoles(@RequestBody UserWithRolesRequest request) {
+    return userWithRolesService.addUserWithoutRoles(request);
+  }
+
+  @PostMapping("/add")
+  @Operation(summary = "Add a user with roles in a string array")
+  public UserWithRolesResponse addUserWithRoles(@RequestBody UserWithRolesRequest userRequest) {
+    Set<Role> roles = new HashSet<>();
+    for (String roleName : userRequest.getRoles()) {
+      Role role = roleRepository.findByRoleName(roleName)
+              .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found: " + roleName));
+      roles.add(role);
+    }
+
+    UserWithRoles newUser = new UserWithRoles(userRequest.getUsername(), passwordEncoder.encode(userRequest.getPassword()), userRequest.getEmail());
+    newUser.setRoles(roles);
+
+    return userWithRolesService.addUserWithRoles(newUser);
   }
 
   //Take care with this. This should NOT be something everyone can call
@@ -70,14 +100,15 @@ public class UserWithRoleController {
 
   @PutMapping("/{username}")
   @Operation(summary = "Update a user", description = "Caller must be authenticated with the role ADMIN")
-  public UserWithRolesResponse editUserWithRoles(@PathVariable String username, @RequestBody UserWithRolesRequest body) {
-    UserWithRoles updatedUser = userWithRolesService.getUser(username);
+  public void setRoles(UserWithRoles user, String[] roleNames) {
+    Set<Role> roles = new HashSet<>();
+    for (String roleName : roleNames) {
 
-    updatedUser.setEmail(body.getEmail());
-    updatedUser.setRoles(body.getRoles());
-    updatedUser.setEdited(LocalDateTime.now());
-
-    return userWithRolesService.editUserWithRoles(username, new UserWithRolesRequest(updatedUser.getUsername(), updatedUser.getPassword(), updatedUser.getEmail(), updatedUser.getRoles()));
+      Role role = roleRepository.findByRoleName(roleName)
+              .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found: " + roleName));
+      roles.add(role);
+    }
+    user.setRoles(roles);
   }
 }
 

@@ -18,11 +18,12 @@ public class UserWithRolesRequest {
     String password;
     @NonNull
     String email;
-    Set<Role> roles;
+    String[] roles;
 
     public UserWithRolesRequest(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
     }
+
 }

@@ -2,6 +2,12 @@ package kea.bowlingBackend.security.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import kea.bowlingBackend.security.repository.RoleRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,14 +15,11 @@ import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import org.springframework.web.server.ResponseStatusException;
 
 @Configurable
 @Getter
@@ -29,7 +32,7 @@ import java.util.Set;
 public class UserWithRoles implements UserDetails {
 
   @Transient
-  static final int PASSWORD_MIN_LENGTH = 60;  // BCrypt encoded passwords always have length 60
+  static final int PASSWORD_MIN_LENGTH = 60; // BCrypt encoded passwords always have length 60
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,18 +40,18 @@ public class UserWithRoles implements UserDetails {
   @Column(name = "user_id")
   private Long userId;
 
-  @Column(nullable = false,length = 50,unique = true)
-  String username;
+  @Column(nullable = false, length = 50, unique = true)
+  private String username;
 
-  @Column(nullable = false,length = 50,unique = true)
-  String email;
+  @Column(nullable = false, length = 50, unique = true)
+  private String email;
 
   //60 = length of a bcrypt encoded password
   @JsonIgnore
   @Column(nullable = false, length = 60)
-  String password;
+  private String password;
 
-  private boolean enabled= true;
+  private boolean enabled = true;
 
   @CreationTimestamp
   private LocalDateTime created;
@@ -56,32 +59,40 @@ public class UserWithRoles implements UserDetails {
   @UpdateTimestamp
   private LocalDateTime edited;
 
-
   @Getter
   @ManyToMany(fetch = FetchType.EAGER)
-  @JoinTable(name = "user_roles",
-          joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
-          inverseJoinColumns = {@JoinColumn(name = "role_roleName", referencedColumnName = "roleName")})
-  Set<Role> roles = new HashSet<>();
+  @JoinTable(
+    name = "user_roles",
+    joinColumns = {
+      @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+    },
+    inverseJoinColumns = {
+      @JoinColumn(name = "role_roleName", referencedColumnName = "roleName"),
+    }
+  )
+  private Set<Role> roles = new HashSet<>();
 
   public UserWithRoles() {}
 
-  public UserWithRoles(String user, String password, String email){
-    this.username = user;
+  public UserWithRoles(String username, String password, String email) {
+    this.username = username;
     setPassword(password);
     this.email = email;
   }
 
-  public void setPassword(String pw){
-    if(pw.length()<60){
+  public void setPassword(String password) {
+    if (password.length() < PASSWORD_MIN_LENGTH) {
       throw new IllegalArgumentException("Password is not encoded");
     }
-    this.password = pw;
+    this.password = password;
   }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return roles.stream().map(role -> new SimpleGrantedAuthority(role.getRoleName())).toList();
+    return roles
+      .stream()
+      .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRoleName()))
+      .collect(Collectors.toSet());
   }
 
   public void addRole(Role roleToAdd) {
@@ -97,21 +108,32 @@ public class UserWithRoles implements UserDetails {
     }
   }
 
-  public String getName(){
+  public String getName() {
     return username;
   }
 
-  public String getUsername(){
+  public String getUsername() {
     return username;
   }
+
   //You can, but are NOT expected to use the fields below
   @Override
-  public boolean isAccountNonExpired() {return enabled;}
+  public boolean isAccountNonExpired() {
+    return enabled;
+  }
 
   @Override
-  public boolean isAccountNonLocked() { return enabled;}
+  public boolean isAccountNonLocked() {
+    return enabled;
+  }
 
   @Override
-  public boolean isCredentialsNonExpired() { return enabled; }
+  public boolean isCredentialsNonExpired() {
+    return enabled;
+  }
 
+  @Override
+  public boolean isEnabled() {
+    return enabled;
+  }
 }
