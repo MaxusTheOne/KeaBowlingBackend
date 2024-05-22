@@ -48,8 +48,8 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
     MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
     http
-            .cors(Customizer.withDefaults())
-            .csrf(csrf -> csrf.disable())
+            .cors(Customizer.withDefaults())  //Will use the CorsConfigurationSource bean declared in CorsConfig.java
+            .csrf(csrf -> csrf.disable())  //We can disable csrf, since we are using token based authentication, not cookie based
             .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .oauth2ResourceServer((oauth2ResourceServer) ->
                     oauth2ResourceServer
@@ -60,9 +60,9 @@ public class SecurityConfig {
                             .accessDeniedHandler(new CustomOAuth2AccessDeniedHandler()));
 
     http.authorizeHttpRequests((authorize) -> authorize
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/users")).permitAll()
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/users/add")).hasRole("ADMIN")
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/auth/login")).permitAll()
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/users")).permitAll()
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/users/add")).permitAll() // Ensure role name matches correctly
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/user-with-role")).permitAll()
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/demo/anonymous")).permitAll()
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/index.html")).permitAll()
@@ -77,11 +77,6 @@ public class SecurityConfig {
   }
 
   @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-    return authenticationConfiguration.getAuthenticationManager();
-  }
-
-  @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
@@ -90,7 +85,7 @@ public class SecurityConfig {
   public JwtAuthenticationConverter authenticationConverter() {
     JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
     jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName("roles");
-    jwtGrantedAuthoritiesConverter.setAuthorityPrefix("");
+    jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_"); // Ensure roles are prefixed with "ROLE_"
     JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
     jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
     return jwtAuthenticationConverter;
@@ -110,3 +105,4 @@ public class SecurityConfig {
     return new NimbusJwtEncoder(new ImmutableSecret<>(secretKey()));
   }
 }
+
