@@ -35,10 +35,15 @@ public class SetupTestUsers implements ApplicationRunner {
         roleRepository.save(new Role("USER"));
         roleRepository.save(new Role("STAFF"));
         roleRepository.save(new Role("ADMIN"));
+        roleRepository.save(new Role("EQUIPMENT_OPERATOR"));
+        roleRepository.save(new Role("RESERVATION_STAFF"));
 
+
+        Role roleEquipmentOperator = roleRepository.findById("EQUIPMENT_OPERATOR").orElseThrow(()-> new NoSuchElementException("Role 'equipment_operator' not found"));
         Role roleUser = roleRepository.findById("USER").orElseThrow(()-> new NoSuchElementException("Role 'user' not found"));
         Role roleAdmin = roleRepository.findById("ADMIN").orElseThrow(()-> new NoSuchElementException("Role 'admin' not found"));
         Role roleStaff = roleRepository.findById("STAFF").orElseThrow(()-> new NoSuchElementException("Role 'staff' not found"));
+        Role roleReservationStaff = roleRepository.findById("RESERVATION_STAFF").orElseThrow(()-> new NoSuchElementException("Role 'reservation_staff' not found"));
 
         UserWithRoles user1 = new UserWithRoles("user1", pwEncoder.encode(passwordUsedByAll), "user1@a.dk");
         UserWithRoles user2 = new UserWithRoles("user2", pwEncoder.encode(passwordUsedByAll), "user2@a.dk");
@@ -60,6 +65,8 @@ public class SetupTestUsers implements ApplicationRunner {
         user1.addRole(roleAdmin);
         user2.addRole(roleUser);
         user3.addRole(roleStaff);
+        user4.addRole(roleEquipmentOperator);
+        user5.addRole(roleReservationStaff);
         userWithRolesRepository.save(user1);
         userWithRolesRepository.save(user2);
         userWithRolesRepository.save(user3);
