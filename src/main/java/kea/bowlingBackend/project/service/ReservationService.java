@@ -47,4 +47,12 @@ public class ReservationService {
     public List<ReservationResponseDTO> getReservationsByUserId(int userId) {
         return reservationRepository.findByUser(userWithRolesRepository.findById(Integer.toString(userId))).stream().map(ReservationResponseDTO::new).collect(Collectors.toList());
     }
+
+    public void updateReservation(ReservationRequestDTO reservationRequestDTO) {
+        Optional<ReservationResponseDTO> reservation = reservationRepository.findById((reservationRequestDTO.getId())).map(ReservationResponseDTO::new);
+        if (reservation.isEmpty()) {
+            throw new IllegalArgumentException("Reservation with id " + reservationRequestDTO.getId() + " not found");
+        }
+        reservationRepository.save(reservationRequestDTO.toReservation());
+    }
 }

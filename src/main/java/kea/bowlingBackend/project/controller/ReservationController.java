@@ -36,6 +36,11 @@ public class ReservationController {
         return reservationService.getReservationsByUserId(userId);
     }
 
+    @PutMapping("/{id}")
+    public void updateReservation(@RequestBody ReservationRequestDTO reservationRequestDTO) {
+        reservationService.updateReservation(reservationRequestDTO);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteReservation(@PathVariable String id) {
         reservationService.deleteReservation(id);

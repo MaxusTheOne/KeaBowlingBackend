@@ -8,6 +8,8 @@ import org.apache.catalina.User;
 
 import java.util.Date;
 import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Setter
@@ -20,7 +22,8 @@ public class Reservation {
     private int id;
     @ManyToOne()
     private UserWithRoles user;
-    private Date reservationDateTime;
+
+    private LocalDateTime reservationDateTime;
     private int reservationLengthMinutes;
     private int peopleAmount;
     private String bookingType;
@@ -46,10 +49,11 @@ public class Reservation {
         this.equipment = equipment.stream().map(Equipment::new).toList();
 
     }
-
-    public Reservation(UserWithRoles user, int reservationLengthMinutes, int peopleAmount, String bookingType, boolean childFriendly, List<String> equipment) {
+    public Reservation(UserWithRoles user,String reservationDateTime, int reservationLengthMinutes, int peopleAmount, String bookingType, boolean childFriendly, List<String> equipment) {
+        String reservationDateTimeString = "2021-12-12 12:12:12";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         this.user = user;
-        this.reservationDateTime = new Date();
+        this.reservationDateTime = LocalDateTime.parse(reservationDateTime, formatter);
         this.reservationLengthMinutes = reservationLengthMinutes;
         this.peopleAmount = peopleAmount;
         this.bookingType = bookingType;
@@ -59,8 +63,24 @@ public class Reservation {
         } else {
             this.equipment = null;
         }
-
-
     }
 
+
+    public Reservation(String id, int userId,String reservationDateTime, int reservationLengthMinutes, int peopleAmount, String bookingType, boolean childFriendly, List<String> equipment) {
+        String reservationDateTimeString = "2021-12-12 12:12:12";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        this.id = Integer.parseInt(id);
+        this.user = new UserWithRoles();
+        this.user.setUserId((long) userId);
+        this.reservationDateTime = LocalDateTime.parse(reservationDateTime, formatter);
+        this.reservationLengthMinutes = reservationLengthMinutes;
+        this.peopleAmount = peopleAmount;
+        this.bookingType = bookingType;
+        this.childFriendly = childFriendly;
+        if (equipment != null){
+            this.equipment = equipment.stream().map(Equipment::new).toList();
+        } else {
+            this.equipment = null;
+        }
+    }
 }

@@ -26,15 +26,15 @@ public class SetupTestReservations {
         UserWithRoles user3 = userWithRolesRepository.findByUsername("user3").get();
 
         //    public Reservation(int userId, int reservationLengthMinutes, int peopleAmount, String bookingType, boolean childFriendly, List<String> equipment)
-        Reservation reservation1 = new Reservation(user1, 60, 4, "dinner", true, null);
-        Reservation reservation2 = new Reservation(user2, 120, 6, "dinner", false, null);
-        Reservation reservation3 = new Reservation(user3, 90, 5, "airhockey", true, null);
-        Reservation reservation4 = new Reservation(user1, 60, 4, "airhockey", true, null);
-        Reservation reservation5 = new Reservation(user2, 120, 6, "bowling", false, null);
-        Reservation reservation6 = new Reservation(user3, 90, 5, "bowling", true, null);
-        Reservation reservation7 = new Reservation(user1, 60, 4, "dinner bowling", true, null);
-        Reservation reservation8 = new Reservation(user2, 120, 6, "dinner airhockey", false, null);
-        Reservation reservation9 = new Reservation(user3, 90, 5, "bowling airhockey", true, null);
+        Reservation reservation1 = new Reservation(user1, "2021-05-01 12:00:00", 60, 4, "dinner", true, null);
+        Reservation reservation2 = new Reservation(user2, "2021-05-10 12:00:00", 120, 6, "dinner", false, null);
+        Reservation reservation3 = new Reservation(user3, "2021-05-12 12:00:00", 90, 5, "dinner", true, null);
+        Reservation reservation4 = new Reservation(user1, "2021-06-01 12:00:00", 60, 4, "bowling", true, null);
+        Reservation reservation5 = new Reservation(user2, "2021-07-09 12:00:00", 120, 6, "bowling", false, null);
+        Reservation reservation6 = new Reservation(user3, "2021-08-03 12:00:00", 90, 5, "bowling", true, null);
+        Reservation reservation7 = new Reservation(user1, "2021-09-13 12:00:00", 60, 4, "dinner airhockey", true, null);
+        Reservation reservation8 = new Reservation(user2, "2021-01-04 12:00:00", 120, 6, "dinner airhockey", false, null);
+        Reservation reservation9 = new Reservation(user3, "2021-05-06 12:00:00", 90, 5, "dinner airhockey", true, null);
 
         reservationRepository.save(reservation1);
         reservationRepository.save(reservation2);
