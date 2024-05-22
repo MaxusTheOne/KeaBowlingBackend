@@ -45,6 +45,7 @@ public class EquipmentService {
         original.setDescription(request.description());
         original.setBrand(request.brand());
         original.setType(request.type());
+        original.setStockAmount(request.stockAmount());
         return toDTO(original);
     }
 
