@@ -67,8 +67,8 @@ public class Reservation {
 
 
     public Reservation(String id, int userId,String reservationDateTime, int reservationLengthMinutes, int peopleAmount, String bookingType, boolean childFriendly, List<String> equipment) {
-        String reservationDateTimeString = "2021-12-12 12:12:12";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String reservationDateTimeString = "2021-12-12T12:12";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         this.id = Integer.parseInt(id);
         this.user = new UserWithRoles();
         this.user.setUserId((long) userId);
