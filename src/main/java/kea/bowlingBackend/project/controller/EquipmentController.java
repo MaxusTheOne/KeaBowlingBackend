@@ -3,6 +3,7 @@ package kea.bowlingBackend.project.controller;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import kea.bowlingBackend.project.dto.EquipmentDTO;
+import kea.bowlingBackend.project.dto.EquipmentRequestDTO;
 import kea.bowlingBackend.project.model.Equipment;
 import kea.bowlingBackend.project.service.EquipmentService;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class EquipmentController {
     }
 
     @PutMapping("/{id}")
-    public EquipmentDTO updateEquipment(@PathVariable int id, @RequestBody EquipmentDTO updatedEquipment) {
+    public EquipmentDTO updateEquipment(@PathVariable int id, @RequestBody EquipmentRequestDTO updatedEquipment) {
         EquipmentDTO original = equipmentService.getEquipmentById(id);
         return equipmentService.updateEquipment(original, updatedEquipment);
     }

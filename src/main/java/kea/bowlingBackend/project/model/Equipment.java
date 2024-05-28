@@ -37,4 +37,13 @@ public class Equipment {
     public Equipment(String name) {
         this.name = name;
     }
+
+    public Equipment(int id, String name, String description, String brand, String type, int stockAmount) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.brand = brand;
+        this.type = type;
+        this.stockAmount = stockAmount;
+    }
 }

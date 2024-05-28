@@ -1,6 +1,7 @@
 package kea.bowlingBackend.project.service;
 
 import kea.bowlingBackend.project.dto.EquipmentDTO;
+import kea.bowlingBackend.project.dto.EquipmentRequestDTO;
 import kea.bowlingBackend.project.model.Equipment;
 import kea.bowlingBackend.project.repository.EquipmentRepository;
 import org.springframework.http.HttpStatus;
@@ -61,4 +62,14 @@ public class EquipmentService {
         equipmentRepository.delete(equipment);
     }
 
+    public EquipmentDTO updateEquipment(EquipmentDTO original, EquipmentRequestDTO updatedEquipment) {
+        Equipment equipment = equipmentRepository.findById((long) original.id()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Equipment not found"));
+        equipment.setName(updatedEquipment.getName());
+        equipment.setDescription(updatedEquipment.getDescription());
+        equipment.setBrand(updatedEquipment.getBrand());
+        equipment.setType(updatedEquipment.getType());
+        equipment.setStockAmount(updatedEquipment.getStockAmount());
+        equipmentRepository.save(equipment);
+        return toDTO(equipment);
+    }
 }
