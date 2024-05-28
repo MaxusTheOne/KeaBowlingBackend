@@ -1,5 +1,6 @@
 package kea.bowlingBackend.project.controller;
 
+import kea.bowlingBackend.project.dto.ScheduleResponseDTO;
 import kea.bowlingBackend.project.model.Schedule;
 import kea.bowlingBackend.project.service.ScheduleService;
 import org.springframework.http.ResponseEntity;
@@ -18,18 +19,18 @@ public class ScheduleController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Schedule>> getSchedules() {
-        return ResponseEntity.ok(scheduleService.getSchedules());
+    public ResponseEntity<List<ScheduleResponseDTO>> getSchedules() {
+        return ResponseEntity.ok(scheduleService.getSchedules().stream().map(scheduleService::toResponseDTO).toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Schedule> getScheduleById(@PathVariable int id) {
-        return ResponseEntity.ok(scheduleService.getScheduleById(id));
+    public ResponseEntity<ScheduleResponseDTO> getScheduleById(@PathVariable int id) {
+        return ResponseEntity.ok(new ScheduleResponseDTO(scheduleService.getScheduleById(id)));
     }
 
     @PostMapping("")
-    public ResponseEntity<Schedule> createSchedule(@RequestBody Schedule schedule) {
-        return ResponseEntity.ok(scheduleService.createSchedule(schedule));
+    public ResponseEntity<ScheduleResponseDTO> createSchedule(@RequestBody Schedule schedule) {
+        return ResponseEntity.ok(new ScheduleResponseDTO(scheduleService.createSchedule(schedule)));
     }
 
     @DeleteMapping("/{id}")
@@ -39,7 +40,7 @@ public class ScheduleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Schedule> updateSchedule(@PathVariable int id, @RequestBody Schedule schedule) {
-        return ResponseEntity.ok(scheduleService.updateSchedule(id, schedule));
+    public ResponseEntity<ScheduleResponseDTO> updateSchedule(@PathVariable int id, @RequestBody Schedule schedule) {
+        return ResponseEntity.ok(new ScheduleResponseDTO(scheduleService.updateSchedule(id, schedule)));
     }
 }

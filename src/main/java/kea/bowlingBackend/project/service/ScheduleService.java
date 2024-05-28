@@ -1,5 +1,6 @@
 package kea.bowlingBackend.project.service;
 
+import kea.bowlingBackend.project.dto.ScheduleResponseDTO;
 import kea.bowlingBackend.project.model.Schedule;
 import kea.bowlingBackend.project.repository.ScheduleRepository;
 import org.springframework.stereotype.Service;
@@ -37,5 +38,9 @@ public class ScheduleService {
         }
         schedule.setId(id);
         return scheduleRepository.save(schedule);
+    }
+
+    public ScheduleResponseDTO toResponseDTO(Schedule schedule) {
+        return new ScheduleResponseDTO(schedule.getId(), schedule.getUser(), schedule.getStart(), schedule.getEnd());
     }
 }
