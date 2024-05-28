@@ -19,7 +19,7 @@ public class ScheduleService {
         return scheduleRepository.findAll();
     }
 
-    public Schedule getScheduleById(String id) {
+    public Schedule getScheduleById(int id) {
         return scheduleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Schedule with id " + id + " not found"));
     }
 
@@ -27,11 +27,11 @@ public class ScheduleService {
         return scheduleRepository.save(schedule);
     }
 
-    public void deleteSchedule(String id) {
+    public void deleteSchedule(int id) {
         scheduleRepository.deleteById(id);
     }
 
-    public Schedule updateSchedule(String id, Schedule schedule) {
+    public Schedule updateSchedule(int id, Schedule schedule) {
         if (scheduleRepository.findById(id).isEmpty()) {
             throw new IllegalArgumentException("Schedule with id " + id + " not found");
         }

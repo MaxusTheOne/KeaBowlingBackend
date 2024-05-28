@@ -7,16 +7,12 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SetupTestProducts implements ApplicationRunner {
+public class SetupTestProducts {
 
     ProductRepository productRepository;
 
     public SetupTestProducts(ProductRepository productRepository) {
         this.productRepository = productRepository;
-    }
-
-    public void run(ApplicationArguments args) {
-        createTestProduct();
     }
 
     private void createTestProduct() {
