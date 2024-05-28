@@ -22,4 +22,11 @@ public class ScheduleDTO {
             this.end = end;
         }
 
+        public ScheduleDTO(ScheduleDTO schedule) {
+            this.id = schedule.getId();
+            this.username = schedule.getUsername();
+            this.start = schedule.getStart();
+            this.end = schedule.getEnd();
+        }
+
 }

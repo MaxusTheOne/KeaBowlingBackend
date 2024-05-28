@@ -31,5 +31,14 @@ public class Schedule {
     }
 
 
+    public Schedule(String username, String start, String end) {
+        this.user = new UserWithRoles();
+    }
 
+    public Schedule(int id, String username, String start, String end) {
+        this.id = id;
+        this.user = new UserWithRoles();
+        this.start = start;
+        this.end = end;
+    }
 }
