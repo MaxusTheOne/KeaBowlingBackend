@@ -98,22 +98,14 @@ public class UserWithRoleController {
   }
 
   @GetMapping("/{id}")
-  @Operation(summary = "Get a user by id", description = "Caller must be authenticated with the role ADMIN")
     public UserWithRolesResponse getUserById(@PathVariable String id) {
         return userWithRolesService.getUserById(id);
   }
 
   @PutMapping("/{username}")
-  @Operation(summary = "Update a user", description = "Caller must be authenticated with the role ADMIN")
-  public void setRoles(UserWithRoles user, String[] roleNames) {
-    Set<Role> roles = new HashSet<>();
-    for (String roleName : roleNames) {
-
-      Role role = roleRepository.findByRoleName(roleName)
-              .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found: " + roleName));
-      roles.add(role);
-    }
-    user.setRoles(roles);
+  public void getUserById(@PathVariable String username, @RequestBody UserWithRolesRequest updatedUser){
+    UserWithRoles original = userWithRolesService.getUser(username);
+    userWithRolesService.updateUser(original, updatedUser);
   }
 }
 

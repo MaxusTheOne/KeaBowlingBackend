@@ -1,5 +1,8 @@
 package kea.bowlingBackend.security.service;
 
+import kea.bowlingBackend.project.dto.EquipmentDTO;
+import kea.bowlingBackend.project.dto.EquipmentRequestDTO;
+import kea.bowlingBackend.project.model.Equipment;
 import kea.bowlingBackend.security.dto.UserWithRolesRequest;
 import kea.bowlingBackend.security.dto.UserWithRolesResponse;
 import kea.bowlingBackend.security.entity.Role;
@@ -7,6 +10,7 @@ import kea.bowlingBackend.security.entity.UserWithRoles;
 import kea.bowlingBackend.security.repository.RoleRepository;
 import kea.bowlingBackend.security.repository.UserWithRolesRepository;
 import jakarta.annotation.PostConstruct;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -149,7 +153,7 @@ public class UserWithRolesService {
     }
 
   public UserWithRoles getUser(String username) {
-    return userWithRolesRepository.findById(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+    return userWithRolesRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
   }
 
 
@@ -157,4 +161,20 @@ public class UserWithRolesService {
         UserWithRoles user = userWithRolesRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
         return new UserWithRolesResponse(user);
     }
+
+  public void updateUser(UserWithRoles original, UserWithRolesRequest updatedUser) {
+    UserWithRoles user = userWithRolesRepository.findByUsername(original.getUsername()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+    user.setEmail(updatedUser.getEmail());
+    if (updatedUser.getPassword() != null && !updatedUser.getPassword().equals("")) {
+      user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+    }
+    else {
+      user.setUsername(updatedUser.getUsername());
+    }
+    user.setPassword(original.getPassword());
+    user.setRoles(original.getRoles());
+
+    userWithRolesRepository.save(user);
+
+  }
 }

@@ -19,6 +19,8 @@ public class UserWithRolesRequest {
     @NonNull
     String email;
     String[] roles;
+    String created;
+    String edited;
 
     public UserWithRolesRequest(String username, String password, String email) {
         this.username = username;
