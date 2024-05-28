@@ -34,3 +34,4 @@ build/
 
 ### Environment File ###
 environment.properties
+src/main/resources/environment.properties
