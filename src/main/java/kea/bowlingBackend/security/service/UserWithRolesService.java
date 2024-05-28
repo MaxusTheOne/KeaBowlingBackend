@@ -177,4 +177,11 @@ public class UserWithRolesService {
     userWithRolesRepository.save(user);
 
   }
+
+  public List<UserWithRolesResponse> getUsersByRole(String role) {
+    List<UserWithRolesResponse> users = new ArrayList<>();
+    userWithRolesRepository.findByRoles_RoleName(role).map(user -> users.add(new UserWithRolesResponse(user)));
+    return users;
+  }
+
 }

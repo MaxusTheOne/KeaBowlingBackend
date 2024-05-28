@@ -4,6 +4,6 @@ import kea.bowlingBackend.project.model.Purchase;
 
 import java.util.List;
 
-public record ProductDTO(String name, double price, int stock, String image) {
+public record ProductDTO(int id, String name, double price, int stock, String image) {
 
 }
