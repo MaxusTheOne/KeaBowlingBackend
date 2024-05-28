@@ -97,6 +97,11 @@ public class UserWithRoleController {
     return userWithRolesService.getAllUsers();
   }
 
+  @GetMapping("/{id}")
+  @Operation(summary = "Get a user by id", description = "Caller must be authenticated with the role ADMIN")
+    public UserWithRolesResponse getUserById(@PathVariable String id) {
+        return userWithRolesService.getUserById(id);
+  }
 
   @PutMapping("/{username}")
   @Operation(summary = "Update a user", description = "Caller must be authenticated with the role ADMIN")

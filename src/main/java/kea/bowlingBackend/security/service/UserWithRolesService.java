@@ -153,4 +153,8 @@ public class UserWithRolesService {
   }
 
 
+    public UserWithRolesResponse getUserById(String id) {
+        UserWithRoles user = userWithRolesRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        return new UserWithRolesResponse(user);
+    }
 }

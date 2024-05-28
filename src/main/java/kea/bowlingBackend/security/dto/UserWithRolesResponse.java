@@ -25,8 +25,8 @@ public class UserWithRolesResponse {
         this.username = userWithRoles.getUsername();
         this.roles = userWithRoles.getRoles().stream().map(Role::getRoleName).toList();
         this.email = userWithRoles.getEmail();
-        this.created = userWithRoles.getCreated().toString();
-        this.edited = userWithRoles.getEdited().toString();
+        this.created = userWithRoles.getCreated().toString().substring(0, 19);
+        this.edited = userWithRoles.getEdited().toString().substring(0, 19);
     }
 
 }
