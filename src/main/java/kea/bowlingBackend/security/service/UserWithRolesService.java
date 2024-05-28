@@ -97,6 +97,7 @@ public class UserWithRolesService {
     return new UserWithRolesResponse(userWithRolesRepository.save(user));
   }
 
+
   public UserWithRolesResponse addUserWithRoles(UserWithRoles userWithRoles) {
     if (userWithRolesRepository.existsByUsername(userWithRoles.getUsername())) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user name is taken");
@@ -162,7 +163,7 @@ public class UserWithRolesService {
         return new UserWithRolesResponse(user);
     }
 
-  public void updateUser(UserWithRoles original, UserWithRolesRequest updatedUser) {
+  public void updateUser(UserWithRoles original, UserWithRoles updatedUser) {
     UserWithRoles user = userWithRolesRepository.findByUsername(original.getUsername()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     user.setEmail(updatedUser.getEmail());
     if (updatedUser.getPassword() != null && !updatedUser.getPassword().equals("")) {
@@ -176,5 +177,9 @@ public class UserWithRolesService {
 
     userWithRolesRepository.save(user);
 
+  }
+
+  public Role getRoleByName(String role) {
+    return roleRepository.findByRoleName(role).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"));
   }
 }

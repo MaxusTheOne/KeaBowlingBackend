@@ -79,6 +79,24 @@ public class UserWithRoles implements UserDetails {
     setPassword(password);
     this.email = email;
   }
+  public UserWithRoles(String username, String email, Set<Role> roleEntities, LocalDateTime created, LocalDateTime edited) {
+    this.username = username;
+    this.email = email;
+    this.roles = roleEntities;
+    this.created = created;
+    this.edited = edited;
+  }
+
+
+  public UserWithRoles(String username, String password, String email, Set<Role> roleEntities, LocalDateTime created, LocalDateTime edited) {
+    this.username = username;
+    setPassword(password);
+    this.email = email;
+    this.roles = roleEntities;
+    this.created = created;
+    this.edited = edited;
+  }
+
 
   public void setPassword(String password) {
     if (password.length() < PASSWORD_MIN_LENGTH) {

@@ -105,7 +105,7 @@ public class UserWithRoleController {
   @PutMapping("/{username}")
   public void getUserById(@PathVariable String username, @RequestBody UserWithRolesRequest updatedUser){
     UserWithRoles original = userWithRolesService.getUser(username);
-    userWithRolesService.updateUser(original, updatedUser);
+    userWithRolesService.updateUser(original, updatedUser.toUserWithRoles(userWithRolesService));
   }
 }
 
