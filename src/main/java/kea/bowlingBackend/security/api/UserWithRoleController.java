@@ -90,12 +90,17 @@ public class UserWithRoleController {
 
   }
 
-
   @GetMapping("")
   @Operation(summary = "Get all users", description = "Caller must be authenticated with the role ADMIN")
   public List<UserWithRolesResponse> getAllUsers() {
     return userWithRolesService.getAllUsers();
   }
+
+  @GetMapping("/role/{role}")
+  public List<UserWithRolesResponse> getUsersByRole(@PathVariable String role) {
+      return userWithRolesService.getUsersByRole(role);
+  }
+
 
   @GetMapping("/{id}")
     public UserWithRolesResponse getUserById(@PathVariable String id) {

@@ -10,4 +10,6 @@ UserWithRolesRepository extends JpaRepository<UserWithRoles,String> {
     Boolean existsByEmail(String email);
     Boolean existsByUsername(String username);
     Optional<UserWithRoles> findByUsername(String currentUsername);
+
+    Optional<UserWithRoles> findByRoles_RoleName(String roleName);
 }

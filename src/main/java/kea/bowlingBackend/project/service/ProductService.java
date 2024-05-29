@@ -17,7 +17,7 @@ public class ProductService {
     }
 
     public ProductDTO toDTO(Product product) {
-        return new ProductDTO(product.getName(), product.getPrice(), product.getStock(), product.getImage());
+        return new ProductDTO(product.getId(), product.getName(), product.getPrice(), product.getStock(), product.getImage());
     }
 
     public ProductDTO getProductById(int id) {
