@@ -259,7 +259,12 @@ public class UserWithRolesService {
       user.setUsername(updatedUser.getUsername());
     }
     user.setPassword(original.getPassword());
-    user.setRoles(original.getRoles());
+    if (updatedUser.getRoles() != null) {
+      user.setRoles(updatedUser.getRoles());
+    } else {
+      user.setRoles(original.getRoles());
+    }
+
 
     userWithRolesRepository.save(user);
   }
