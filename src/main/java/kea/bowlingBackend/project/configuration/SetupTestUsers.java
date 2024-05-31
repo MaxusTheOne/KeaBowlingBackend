@@ -4,8 +4,6 @@ import kea.bowlingBackend.security.entity.Role;
 import kea.bowlingBackend.security.entity.UserWithRoles;
 import kea.bowlingBackend.security.repository.RoleRepository;
 import kea.bowlingBackend.security.repository.UserWithRolesRepository;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 

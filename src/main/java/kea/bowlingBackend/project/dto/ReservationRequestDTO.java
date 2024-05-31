@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import kea.bowlingBackend.security.repository.UserWithRolesRepository;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,7 +38,7 @@ public class ReservationRequestDTO {
         this.equipment = Objects.requireNonNullElseGet(equipment, ArrayList::new);
     }
 
-    public Reservation toReservation() {
-        return new Reservation(id, userId,reservationDateTime, reservationLengthMinutes, peopleAmount, bookingType, childFriendly, equipment);
+    public Reservation toReservation(UserWithRolesRepository userWithRolesRepository){
+        return new Reservation(id, userId,reservationDateTime, reservationLengthMinutes, peopleAmount, bookingType, childFriendly, equipment, userWithRolesRepository);
     }
 }

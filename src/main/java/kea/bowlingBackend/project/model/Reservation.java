@@ -2,6 +2,7 @@ package kea.bowlingBackend.project.model;
 
 import jakarta.persistence.*;
 import kea.bowlingBackend.security.entity.UserWithRoles;
+import kea.bowlingBackend.security.repository.UserWithRolesRepository;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.catalina.User;
@@ -66,13 +67,12 @@ public class Reservation {
     }
 
 
-    public Reservation(String id, int userId,String reservationDateTime, int reservationLengthMinutes, int peopleAmount, String bookingType, boolean childFriendly, List<String> equipment) {
-        String reservationDateTimeString = "2021-12-12T12:12";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+    public Reservation(String id, int userId, String reservationDateTime, int reservationLengthMinutes, int peopleAmount, String bookingType, boolean childFriendly, List<String> equipment, UserWithRolesRepository userWithRolesRepository) {
+        String dateTimeString = "2024-06-05T15:14:00.000";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
         this.id = Integer.parseInt(id);
-        this.user = new UserWithRoles();
-        this.user.setUserId((long) userId);
-        this.reservationDateTime = LocalDateTime.parse(reservationDateTime, formatter);
+        this.user = userWithRolesRepository.findById(Integer.toString(userId)).orElseThrow(() -> new IllegalArgumentException("User with id " + userId + " not found"));
+        this.reservationDateTime = LocalDateTime.parse(dateTimeString, formatter);
         this.reservationLengthMinutes = reservationLengthMinutes;
         this.peopleAmount = peopleAmount;
         this.bookingType = bookingType;
