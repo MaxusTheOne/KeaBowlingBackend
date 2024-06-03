@@ -21,9 +21,9 @@ public class SetupTestReservations {
 
     public void createTestReservations() {
 
-        UserWithRoles user1 = userWithRolesRepository.findByUsername("user1").get();
-        UserWithRoles user2 = userWithRolesRepository.findByUsername("user2").get();
-        UserWithRoles user3 = userWithRolesRepository.findByUsername("user3").get();
+        UserWithRoles user1 = userWithRolesRepository.findByUsername("ManagerMogens").get();
+        UserWithRoles user2 = userWithRolesRepository.findByUsername("MariaMartinez").get();
+        UserWithRoles user3 = userWithRolesRepository.findByUsername("AvaKing").get();
 
         //    public Reservation(int userId, int reservationLengthMinutes, int peopleAmount, String bookingType, boolean childFriendly, List<String> equipment)
         Reservation reservation1 = new Reservation(user1, "2021-05-01 12:00:00", 60, 4, "dinner", true, null);

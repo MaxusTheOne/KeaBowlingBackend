@@ -23,11 +23,11 @@ public class SetupTestSchedules {
 
     public void createTestSchedules() {
         //Create test schedules
-        Schedule schedule1 = new Schedule(userWithRolesService, "user1", "2024-05-01 10:00:00", "2024-05-01 12:00:00");
-        Schedule schedule2 = new Schedule(userWithRolesService,"user2", "2024-05-01 12:00:00", "2024-05-01 14:00:00");
-        Schedule schedule3 = new Schedule(userWithRolesService,"user3", "2024-05-01 14:00:00", "2024-05-01 16:00:00");
-        Schedule schedule4 = new Schedule(userWithRolesService,"user1", "2024-05-01 16:00:00", "2024-05-01 18:00:00");
-        Schedule schedule5 = new Schedule(userWithRolesService,"user1", "2024-05-01 18:00:00", "2024-05-01 20:00:00");
+        Schedule schedule1 = new Schedule(userWithRolesService, "MichaelWilliams", "2024-05-01 10:00:00", "2024-05-01 12:00:00");
+        Schedule schedule2 = new Schedule(userWithRolesService,"OperatorOlivia", "2024-05-01 12:00:00", "2024-05-01 14:00:00");
+        Schedule schedule3 = new Schedule(userWithRolesService,"CleanerCasey", "2024-05-01 14:00:00", "2024-05-01 16:00:00");
+        Schedule schedule4 = new Schedule(userWithRolesService,"RonnieRental", "2024-05-01 16:00:00", "2024-05-01 18:00:00");
+        Schedule schedule5 = new Schedule(userWithRolesService,"JamesLee", "2024-05-01 18:00:00", "2024-05-01 20:00:00");
 
         scheduleRepository.save(schedule1);
         scheduleRepository.save(schedule2);

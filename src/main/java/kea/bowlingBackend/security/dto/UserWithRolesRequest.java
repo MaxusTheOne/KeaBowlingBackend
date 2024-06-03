@@ -33,6 +33,15 @@ public class UserWithRolesRequest {
         this.email = email;
     }
 
+    public UserWithRolesRequest(String username, String password, String email, Set<Role> roles, String created, String edited) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.roles = roles.stream().map(Role::getRoleName).toArray(String[]::new);
+        this.created = created;
+        this.edited = edited;
+    }
+
 
     public UserWithRoles toUserWithRoles(UserWithRolesService roleService) {
         Set<Role> roleEntities = new HashSet<>();

@@ -75,6 +75,7 @@ public class SecurityConfig {
             .requestMatchers(mvcMatcherBuilder.pattern("/users/role/**")).permitAll()
             .requestMatchers(mvcMatcherBuilder.pattern("/schedule/**")).permitAll()
             .requestMatchers(mvcMatcherBuilder.pattern("/error")).permitAll()
+            .requestMatchers(mvcMatcherBuilder.pattern("/products/{id}/reduceStock/{quantity}")).permitAll()
             .anyRequest().authenticated());
 
     return http.build();

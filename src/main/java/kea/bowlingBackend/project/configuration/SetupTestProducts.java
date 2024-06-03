@@ -21,7 +21,7 @@ public class SetupTestProducts {
         List<Product> productList = Arrays.asList(
                 // Beers
                 new Product("Carlsberg Pilsner", 29.95, 200, "https://www.kioskenrodbyhavn.dk/5008-thickbox_default/coca-cola-l.jpg"),
-                new Product("Carlsberg Fadøl", 49.95, 120, "https://images3.alphacoders.com/277/277225.jpg"),
+                new Product("Carlsberg Fadøl", 49.95, 120, "https://diskogruppen.dk/wp-content/uploads/2023/03/Carlsberg-04l-plastglas-1.png"),
                 new Product("Tuborg", 29.95, 200, "https://media.danmurphys.com.au/dmo/product/1000004677-TUBORGCAN-1.jpg?impolicy=PROD_LG"),
                 new Product("Tuborg Fadøl", 49.95, 120, "https://diskogruppen.dk/wp-content/uploads/2023/03/Tuborg-plastglas-1.png"),
                 new Product("Royal Classic", 29.95, 200, "https://www.otto-duborg.dk/42-large_default/Royal-Classic-.jpg"),

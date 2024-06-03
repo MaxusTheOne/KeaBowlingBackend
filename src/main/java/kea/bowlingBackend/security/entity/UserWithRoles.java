@@ -31,6 +31,8 @@ import org.springframework.web.server.ResponseStatusException;
 @DiscriminatorColumn(name = "DISCRIMINATOR_TYPE")
 public class UserWithRoles implements UserDetails {
 
+
+
   @Transient
   static final int PASSWORD_MIN_LENGTH = 60; // BCrypt encoded passwords always have length 60
 
@@ -42,6 +44,8 @@ public class UserWithRoles implements UserDetails {
 
   @Column(nullable = false, length = 50, unique = true)
   private String username;
+
+  private String name;
 
   @Column(nullable = false, length = 50, unique = true)
   private String email;
@@ -79,8 +83,34 @@ public class UserWithRoles implements UserDetails {
     setPassword(password);
     this.email = email;
   }
-  public UserWithRoles(String username, String email, Set<Role> roleEntities, LocalDateTime created, LocalDateTime edited) {
+
+    public UserWithRoles(String username, String name, String password, String email, Set<Role> roles) {
+        this.username = username;
+        this.name = name;
+        setPassword(password);
+        this.email = email;
+        this.roles = roles;
+    }
+
+    public UserWithRoles(String username, String name, String password, String email) {
+        this.username = username;
+        this.name = name;
+        setPassword(password);
+        this.email = email;
+    }
+
+    public UserWithRoles(String username, String email, Set<Role> roles, LocalDateTime created, LocalDateTime edited) {
+       this.username = username;
+         this.email = email;
+            this.roles = roles;
+            this.created = created;
+            this.edited = edited;
+
+    }
+
+  public UserWithRoles(String username, String name, String email, Set<Role> roleEntities, LocalDateTime created, LocalDateTime edited) {
     this.username = username;
+    this.name = name;
     this.email = email;
     this.roles = roleEntities;
     this.created = created;
@@ -88,7 +118,7 @@ public class UserWithRoles implements UserDetails {
   }
 
 
-  public UserWithRoles(String username, String password, String email, Set<Role> roleEntities, LocalDateTime created, LocalDateTime edited) {
+  public UserWithRoles(String username, String name, String password, String email, Set<Role> roleEntities, LocalDateTime created, LocalDateTime edited) {
     this.username = username;
     setPassword(password);
     this.email = email;
