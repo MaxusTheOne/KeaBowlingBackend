@@ -41,7 +41,7 @@ public class ReservationService {
     }
 
     public void addReservation(ReservationRequestDTO reservationRequestDTO) {
-        reservationRepository.save(reservationRequestDTO.toReservation());
+        reservationRepository.save(reservationRequestDTO.toReservation(userWithRolesRepository));
     }
 
     public List<ReservationResponseDTO> getReservationsByUserId(int userId) {
@@ -53,6 +53,6 @@ public class ReservationService {
         if (reservation.isEmpty()) {
             throw new IllegalArgumentException("Reservation with id " + reservationRequestDTO.getId() + " not found");
         }
-        reservationRepository.save(reservationRequestDTO.toReservation());
+        reservationRepository.save(reservationRequestDTO.toReservation(userWithRolesRepository));
     }
 }
